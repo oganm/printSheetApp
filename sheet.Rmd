@@ -42,7 +42,7 @@ char = import5eChar::importCharacter(file = PUTCHARFILEHERE)
 # 	kable_styling(position = 'center', latex_options = "scale_down")
 AC = char$armorBonus + char$shieldBonus + char$miscArmorBonus + min(stat2mod(char$abilityScores['Dex']),char$maxDex)
 
-init = unname(char$abilityMods["Dex"] + char$initMiscMod)
+init = initBonus(char= char)
 
 
 c1 = c('Class \\& Level',

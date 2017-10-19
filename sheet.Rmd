@@ -40,7 +40,7 @@ char = import5eChar::importCharacter(file = PUTCHARFILEHERE)
 # 
 # kable(table,format= 'latex',booktabs = TRUE,col.names = NULL,align = 'l',escape=FALSE) %>%
 # 	kable_styling(position = 'center', latex_options = "scale_down")
-AC = char$armorBonus + char$shieldBonus + char$miscArmorBonus + min(stat2mod(char$abilityScores['Dex']),char$maxDex)
+AC = AC(char=char)
 
 init = initBonus(char= char)
 
@@ -51,7 +51,7 @@ c1 = c('Class \\& Level',
 	   'Alignment',
 	   'Proficiency') %>% boldify()
 
-c2 = c(char$Class,
+c2 = c(char$ClassField,
 	   char$Race,
 	   char$Background,
 	   char$Alignment,
@@ -259,15 +259,21 @@ if(!is.null(char$spells)){
         select(-level) %>% 
         kable(format='latex',booktabs = TRUE,escape = FALSE,row.names=FALSE,col.names=NULL,linesep='')  %>% 
         kable_styling(position = 'center', latex_options = c("HOLD_position"))
-    for(i in min(char$spells$level):max(char$spells$level)){
-        if (i ==0){
+    availableLevels = unique(char$spells$level)
+    for(i in seq_along(availableLevels)){
+        if (availableLevels[i] ==0){
             text=  'Cantrip'
         } else{
             text = paste('Level',i,'(',char$spellSlots[i+1],')')
         }
-        out = out %>% group_rows(text, groups[i+1],groups[i+2]-1, latex_gap_space = "1em")
+        out = out %>% group_rows(text, groups[i],groups[i+1]-1, latex_gap_space = "1em")
     }
     out
 }
 
 ```
+
+Notes
+=========
+
+`r char$notes %>% gsub(pattern = '\n',replacement = '\n\n',x = .)`

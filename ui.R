@@ -5,20 +5,19 @@
 # http://shiny.rstudio.com
 #
 
-library(shiny)
-
 shinyUI(fluidPage(
-
-  # Application title
-  titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
-  wellPanel(p('Export your character to google drive and download the file to your PC. Upload that file here and click Export PDF'),
-            p('XML is parsed with ', 
-              a(href="https://github.com/oganm/import5eChar",target= '_blank', 'this'), ' R package.'),
-            p('Source code for this page is ',
-              a(href="https://github.com/oganm/printSheetApp",target= '_blank', 'here'),'.'),
-    fileInput("xmlExport", "Upload",
-                      multiple = FALSE),
-            downloadButton('download','Export PDF')
-            )
-  
+    
+    # Application title
+    titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
+    wellPanel(p('Export your character to google drive and download the file to your PC. Upload that file here and click Export PDF'),
+              p('XML is parsed with ', 
+                a(href="https://github.com/oganm/import5eChar",target= '_blank', 'this'), ' R package.'),
+              p('Source code for this page is ',
+                a(href="https://github.com/oganm/printSheetApp",target= '_blank', 'here'),'.'),
+              fileInput("xmlExport", "Upload",
+                        multiple = FALSE),
+              downloadButton('download','Export less pretty PDF'),
+              downloadButton('downloadNew','Export pretty PDF')
+    )
+    
 ))

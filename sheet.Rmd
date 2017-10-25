@@ -65,7 +65,7 @@ table = data.frame(Score = char$abilityScores ,
            Modifier = char$abilityMods,
            Prof. = char$abilityProf %>% replaceElement(c('TRUE' = '\\XBox',
                                                "FALSE" = '\\Square')) %$% newVector,
-           Save = char$abilityMods + char$abilityProf*char$proficiencyBonus)
+           Save =  saveBonus(char = char))
 rownames(table) %<>% boldify()
 
 kable(table %>% t, format = 'latex',booktabs= TRUE,escape=FALSE)%>%
@@ -104,10 +104,7 @@ kable(table,format= 'latex',booktabs = TRUE,col.names = NULL,align = 'c',escape=
 Skills
 ==============
 ```{r}
-skillBonus = char$skillProf*char$proficiencyBonus +
-        char$skillDoubleProf*char$proficiencyBonus +
-        (char$skillHalfProf*!char$skillProf*char$proficiencyBonus/2) +
-        char$abilityMods[char$skillAttributes]
+skillBonus = skillBonus(char = char)
 
 profMark = char$skillProf %>% replaceElement(c('TRUE' = '\\XBox',
                                                "FALSE" = '\\Square')) %$% newVector
@@ -240,8 +237,8 @@ currencyChar
 Spells
 ==================
 ```{r}
-DC = 8 + char$proficiencyBonus + char$abilityMods[char$castingStatCode+1] + char$miscSpellDCBonus
-spellAttack  =  char$proficiencyBonus  + char$abilityMods[char$castingStatCode+1] + char$miscSpellAttackBonus
+DC = spellDC(char = char)
+spellAttack  =  spellAttack(char = char)
 ```
 
 **Spell DC:** `r DC`

@@ -29,7 +29,8 @@ boldify = function(x){
 # char = importCharacter(fileID = 'google drive file id')
 # by default a sheet for an example character is created
 # characterFile <- system.file("Tim_Fighter5", package = "import5eChar")
-char = import5eChar::importCharacter(file = PUTCHARFILEHERE)
+# char = import5eChar::importCharacter(file = PUTCHARFILEHERE)
+char = import5eChar::importCharacter(file = "C:/Users/Ogan/Downloads/Neferma'at_Cleric6")
 
 ```
 
@@ -261,7 +262,7 @@ if(!is.null(char$spells)){
         if (availableLevels[i] ==0){
             text=  'Cantrip'
         } else{
-            text = paste('Level',i,'(',char$spellSlots[i+1],')')
+            text = paste('Level',availableLevels[i],'(',char$spellSlots[i+1],')')
         }
         out = out %>% group_rows(text, groups[i],groups[i+1]-1, latex_gap_space = "1em")
     }

@@ -30,7 +30,7 @@ boldify = function(x){
 # by default a sheet for an example character is created
 # characterFile <- system.file("Tim_Fighter5", package = "import5eChar")
 # char = import5eChar::importCharacter(file = PUTCHARFILEHERE)
-char = import5eChar::importCharacter(file = "C:/Users/Ogan/Downloads/Neferma'at_Cleric6")
+char = import5eChar::importCharacter(file = PUTCHARFILEHERE)
 
 ```
 

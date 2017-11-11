@@ -27,6 +27,8 @@ shinyServer(function(input, output) {
     output$download <- downloadHandler(
         filename = 'charSheet.pdf',
         content = function(file) {
+            sheet = system.file('rmarkdown/templates/CharacterSheet/skeleton/skeleton.rmd',package = 'import5eChar')
+            
             req(input$xmlExport)
             characterFile = input$xmlExport$datapath
             print("########### File Accepted ###########")
@@ -37,9 +39,11 @@ shinyServer(function(input, output) {
             # characterFile <- system.file("Tim_Fighter5", package = "import5eChar")
             
             print("########### Reading and replacing the PATH ###########")
-            sheet = readLines('sheet.Rmd')
+            # sheet = readLines('sheet.Rmd')
+            sheet = readLines(sheet)
+            
             print(sheet[32])
-            sheet = sub(pattern = "PUTCHARFILEHERE", replace = paste0('"',characterFile,'"'), x = sheet)
+            sheet = sub(pattern = " characterFile", replace = paste0('"',characterFile,'"'), x = sheet,fixed = TRUE)
             print(sheet[32])
             tempFile = paste0(tempfile(),'.Rmd')
             print("########### This is the temp file ###########")

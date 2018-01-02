@@ -6,7 +6,7 @@
 #
 
 shinyUI(fluidPage(
-    
+    tags$head(includeScript('www/js/analytics.js')),
     # Application title
     titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
     wellPanel(p('Export your character to google drive and download the file to your PC.'),

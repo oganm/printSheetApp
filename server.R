@@ -1,17 +1,5 @@
 
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
-
-
-
-
-
-shinyServer(function(input, output) {
-    
+shinyServer(function(input, output, session) {
     # pretty download
     output$downloadNew = downloadHandler(
         filename = 'charSheetPretty.pdf',
@@ -24,7 +12,7 @@ shinyServer(function(input, output) {
         })
     
     # ugly download
-    output$download <- downloadHandler(
+    output$download = downloadHandler(
         filename = 'charSheet.pdf',
         content = function(file) {
             sheet = system.file('rmarkdown/templates/CharacterSheet/skeleton/skeleton.rmd',package = 'import5eChar')
@@ -59,5 +47,23 @@ shinyServer(function(input, output) {
                    envir = new.env(parent = globalenv()))
             # knit(tempFile,'lolo.pdf',)
         }
+    )
+    
+    
+    # show a warning if directly connected to shinyapps.io
+    observe({
+        query = parseQueryString(session$clientData$url_search)
+        if(is.null(query$valid) || query$valid!=TRUE){
+            showModal(
+                modalDialog(title = "You are using the wrong link!",
+                            p("You are connecting to my hosting service diretly instead of using the real link for the site:", 
+                              a(href="https://oganm.github.io/printSheetApp/",target= '_blank', 'oganm.github.io/printSheetApp'),'.'),
+                            p("If you continue to use this link, this site can go down without warning if the hosting service changes 
+                              or it can have an out of date version with unfixed bugs if I don't take it down. Don't trust this link. 
+                              Use the officially supported one."),
+                            easyClose = TRUE)
+            )
+        }
+    }
     )
 })

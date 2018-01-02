@@ -1,5 +1,18 @@
 <html>
  <body style="margin:0px;padding:0px;overflow:hidden">
-  <iframe src = "https://bomancarci.shinyapps.io/printsheetapp/" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
+  <iframe id = "redirectFrame" style="overflow:hidden;height:100%;width:100%" height="100%" width="100%"></iframe>
  </body>
+
+<script type="text/javascript">
+    var urls = new Array("https://oganm.shinyapps.io/printSheetApp/?valid=TRUE",
+                         "https://ogan.shinyapps.io/printsheetapp2/?valid=TRUE");
+    var shinyURL = urls[Math.floor(urls.length*Math.random())];
+    
+    document.getElementById('redirectFrame').setAttribute("src",shinyURL)
+</script>
+
+<noscript>
+     <p>Please enable javascript. or click <a href="https://oganm.shinyapps.io/printSheetApp/?valid=TRUE">here</a> if the page doesn't load.</p>
+</noscript>
+
 </html>

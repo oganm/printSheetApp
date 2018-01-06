@@ -5,7 +5,7 @@
 # http://shiny.rstudio.com
 #
 
-shinyUI(fluidPage(
+shinyUI(fluidPage(theme = shinytheme('cosmo'),
     tags$head(includeScript('www/js/analytics.js')),
     # Application title
     titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
@@ -22,8 +22,18 @@ shinyUI(fluidPage(
                 'Include the exported character file if you can.'),
               fileInput("xmlExport", "Upload",
                         multiple = FALSE),
-              downloadButton('download','Export less pretty PDF'),
-              downloadButton('downloadNew','Export pretty PDF')
+              fluidRow(
+                  column(8,
+                  downloadButton('download','Export less pretty PDF'),
+                  downloadButton('downloadNew','Export pretty PDF')),
+                  column(4,
+                         actionButton('meh','Donate',
+                                          icon = icon('gift'),
+                                          onclick =
+                                              "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
+                                          style = 'float:right;padding:6px 10px;font-size:80%')
+                             ))
     )
+    
     
 ))

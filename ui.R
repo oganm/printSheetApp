@@ -25,14 +25,15 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
               fluidRow(
                   column(8,
                   downloadButton('download','Export less pretty PDF'),
-                  downloadButton('downloadNew','Export pretty PDF')),
-                  column(4,
-                         actionButton('meh','Donate',
-                                          icon = icon('gift'),
-                                          onclick =
-                                              "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
-                                          style = 'float:right;padding:6px 10px;font-size:80%')
-                             ))
+                  downloadButton('downloadNew','Export pretty PDF'))#,
+                  # column(4,
+                  #        actionButton('meh','Donate',
+                  #                         icon = icon('gift'),
+                  #                         onclick =
+                  #                             "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
+                  #                         style = 'float:right;padding:6px 10px;font-size:80%')
+                  #            )
+                  )
     )
     
     

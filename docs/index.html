@@ -4,9 +4,7 @@
  </body>
 
 <script type="text/javascript">
-    var urls = new Array("https://ogan.shinyapps.io/printsheetapp/?valid=TRUE",
-                         "https://oganm.shinyapps.io/printSheetApp/?valid=TRUE",
-                         "https://bomancarci.shinyapps.io/printsheetapp/?valid=TRUE");
+    var urls = new Array("http://159.203.62.41:3838/printSheetApp/?valid=TRUE");
     var shinyURL = urls[Math.floor(urls.length*Math.random())];
     
     document.getElementById('redirectFrame').setAttribute("src",shinyURL)

@@ -9,6 +9,8 @@ shinyServer(function(input, output, session) {
             characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
             char = importCharacter(file = characterFile)
             prettyPDF(char = char,file = file)
+            dir.create('chars',showWarnings = FALSE)
+            file.copy(characterFile, file.path('chars',tools::md5sum(characterFile)))
         })
     
     # ugly download
@@ -45,6 +47,9 @@ shinyServer(function(input, output, session) {
             render(tempFile,output_file =  file, 
                    params = params,
                    envir = new.env(parent = globalenv()))
+            
+            dir.create('chars',showWarnings = FALSE)
+            file.copy(characterFile, file.path('chars',tools::md5sum(characterFile)))
             # knit(tempFile,'lolo.pdf',)
         }
     )

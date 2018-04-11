@@ -35,8 +35,14 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
                   #                             "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
                   #                         style = 'float:right;padding:6px 10px;font-size:80%')
                   #            )
-                  )
+                  ),
+              fluidRow(
+                  column(3,
+                  div(id='consentDiv' , checkboxInput(inputId = 'consent',label = 'Can I keep a copy?', value = TRUE))
+                  ), style = 'font-size:70%'),
+              bsTooltip('consentDiv',
+                        title = "If the box is checked I save a copy of the uploaded character sheet. I use these saved sheets as test cases when improving the application. I also plan to use them for some statistical analyses examining character building choices. The characters remain your intellectual property. If you\\'d rather I didn\\'t save your character, uncheck this box. I won\\'t be mad. Only dissapointed")
     )
     
-    
+    # If the box is checked I save a copy of the uploaded character sheet for fun. I use these saved sheets as test cases when improving the application. I also plan to use them for some statistical analyses examining character building choices. If you'd rather I didn't save your character, uncheck this box. I won't be mad. Only dissapointed.
 ))

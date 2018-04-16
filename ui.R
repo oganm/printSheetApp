@@ -5,10 +5,31 @@
 # http://shiny.rstudio.com
 #
 
+inputUserid <- function(inputId, value='') {
+    #   print(paste(inputId, "=", value))
+    tagList(
+        singleton(tags$head(tags$script(src = "js/md5.js", type='text/javascript'))),
+        singleton(tags$head(tags$script(src = "js/shinyBindings.js", type='text/javascript'))),
+        tags$body(onload="setvalues()"),
+        tags$input(id = inputId, class = "userid", value=as.character(value), type="text", style="display:none;")
+    )
+}
+
+inputIp <- function(inputId, value=''){
+    tagList(
+        singleton(tags$head(tags$script(src = "js/md5.js", type='text/javascript'))),
+        singleton(tags$head(tags$script(src = "js/shinyBindings.js", type='text/javascript'))),
+        tags$body(onload="setvalues()"),
+        tags$input(id = inputId, class = "ipaddr", value=as.character(value), type="text", style="display:none;")
+    )
+}
+
 shinyUI(fluidPage(theme = shinytheme('cosmo'),
     tags$head(includeScript('www/js/analytics.js')),
     # Application title
     titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
+    inputIp("ipid"),
+    inputUserid("fingerprint"),
     wellPanel(p('Export your character to google drive and download the file to your PC.'),
               p('Upload that file here and click Export PDF.'),
               p('Pretty pdf is a fillable character sheets from Wizard\'s. Slightly slower to generate'),

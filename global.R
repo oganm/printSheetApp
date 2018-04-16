@@ -12,13 +12,13 @@ library(bindrcpp)
 library(shinythemes)
 library(shinyBS)
 
-saveCharacter = function(characterFile, consent){
+saveCharacter = function(characterFile, consent, fingerprint = ''){
+    randomName = tools::md5sum(characterFile)
     if(consent){
         dir.create('chars',showWarnings = FALSE)
-        file.copy(characterFile, file.path('chars',tools::md5sum(characterFile)))
+        file.copy(characterFile, file.path('chars',paste0(fingerprint,'_',randomName)))
     } else {
         dir.create('naysayer',showWarnings = FALSE)
-        randomName = tools::md5sum(characterFile)
-        file.create(file.path('naysayer',randomName))
+        file.create(file.path('naysayer',paste0(fingerprint,'_',randomName)))
     }
 }

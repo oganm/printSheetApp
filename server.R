@@ -9,7 +9,7 @@ shinyServer(function(input, output, session) {
             characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
             char = importCharacter(file = characterFile)
             prettyPDF(char = char,file = file)
-            saveCharacter(characterFile,input$consent)
+            saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
   
         })
     
@@ -48,7 +48,7 @@ shinyServer(function(input, output, session) {
                    params = params,
                    envir = new.env(parent = globalenv()))
             
-            saveCharacter(characterFile,input$consent)
+            saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
             
             # knit(tempFile,'lolo.pdf',)
         }

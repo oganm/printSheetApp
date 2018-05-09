@@ -10,7 +10,7 @@ shinyServer(function(input, output, session) {
             char = importCharacter(file = characterFile)
             prettyPDF(char = char,file = file)
             saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
-  
+            
         })
     
     # ugly download
@@ -53,6 +53,24 @@ shinyServer(function(input, output, session) {
             # knit(tempFile,'lolo.pdf',)
         }
     )
+    
+    observe({
+        input$impInit
+        isolate({
+            characterFile = input$xmlExport$datapath
+            if(!is.null(characterFile)){
+                # fix windows paths
+                characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
+                char = importCharacter(file = characterFile)
+                json = improvedInitiativeJSON(char)
+                modalDialog(title = 'JSON for improved initative',
+                            tagList(
+                            code(json, style= 'display:block;white-space:pre-wrap'))) %>% showModal
+                saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+            }
+        })
+    })
+    
     
     
     # show a warning if directly connected to shinyapps.io

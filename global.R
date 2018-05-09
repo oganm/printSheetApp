@@ -11,6 +11,7 @@ library(ogbox)
 library(bindrcpp)
 library(shinythemes)
 library(shinyBS)
+# library(rclipboard)
 
 saveCharacter = function(characterFile, consent, fingerprint = ''){
     randomName = tools::md5sum(characterFile)

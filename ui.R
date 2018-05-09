@@ -28,6 +28,7 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
     tags$head(includeScript('www/js/analytics.js')),
     # Application title
     titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
+    # rclipboardSetup(),
     inputIp("ipid"),
     inputUserid("fingerprint"),
     wellPanel(p('Export your character to google drive and download the file to your PC.'),
@@ -47,15 +48,18 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
                   column(8,
                   downloadButton('download','Export less pretty PDF'),
                   downloadButton('downloadNew','Export pretty PDF'),
+                  actionButton('impInit','Improved Initiative JSON'),
                   actionButton('interactiveSheet','New Interactive Sheet (External Link)',
-                               onclick = "window.open('https://www.reddit.com/r/dndnext/comments/7yan6s/interactive_sheet_for_fifth_edition_character/','_blank')"))#,
-                  # column(4,
-                  #        actionButton('meh','Donate',
-                  #                         icon = icon('gift'),
-                  #                         onclick =
-                  #                             "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
-                  #                         style = 'float:right;padding:6px 10px;font-size:80%')
-                  #            )
+                               onclick = "window.open('https://www.reddit.com/r/dndnext/comments/7yan6s/interactive_sheet_for_fifth_edition_character/','_blank')")),
+                  column(4,
+                         actionButton('meh','Donate',
+                                          icon = icon('gift'),
+                                          onclick =
+                                              "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
+                                          style = 'float:right;padding:6px 10px;font-size:80%'),
+                         bsTooltip('meh',title = "I can afford to keep this up virtually forever as it only costs about 7$/month to run. But if you are feeling generous it\\'s nice for things to pay for themselves")
+                         
+                             )
                   ),
               fluidRow(
                   column(3,

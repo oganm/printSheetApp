@@ -28,7 +28,7 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
     tags$head(includeScript('www/js/analytics.js')),
     # Application title
     titlePanel("Unofficial Fifth Edition Character Sheet PDF export"),
-    # rclipboardSetup(),
+    rclipboardSetup(),
     inputIp("ipid"),
     inputUserid("fingerprint"),
     wellPanel(p('Export your character to google drive and download the file to your PC.'),
@@ -67,7 +67,8 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
                   ), style = 'font-size:70%'),
               bsTooltip('consentDiv',
                         title = "If the box is checked I save a copy of the uploaded character sheet. I use these saved sheets as test cases when improving the application. I also plan to use them for some statistical analyses examining character building choices. The characters remain your intellectual property. If you\\'d rather I didn\\'t save your character, uncheck this box. I won\\'t be mad. Only dissapointed")
-    )
+    ),
+    htmlOutput('textOut')
     
     # If the box is checked I save a copy of the uploaded character sheet for fun. I use these saved sheets as test cases when improving the application. I also plan to use them for some statistical analyses examining character building choices. If you'd rather I didn't save your character, uncheck this box. I won't be mad. Only dissapointed.
 ))

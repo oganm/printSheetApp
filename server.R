@@ -4,71 +4,77 @@ shinyServer(function(input, output, session) {
     output$downloadNew = downloadHandler(
         filename = 'charSheetPretty.pdf',
         content = function(file){
-            characterFile = input$xmlExport$datapath
-            # fix windows paths
-            characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
-            char = importCharacter(file = characterFile)
-            prettyPDF(char = char,file = file)
-            saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
-            
+            withProgress(message = 'Making pdf',value = 1,{
+                characterFile = input$xmlExport$datapath
+                # fix windows paths
+                characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
+                char = importCharacter(file = characterFile)
+                prettyPDF(char = char,file = file)
+                saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+            })
         })
     
     # ugly download
     output$download = downloadHandler(
         filename = 'charSheet.pdf',
         content = function(file) {
-            sheet = system.file('rmarkdown/templates/CharacterSheet/skeleton/skeleton.rmd',package = 'import5eChar')
-            
-            req(input$xmlExport)
-            characterFile = input$xmlExport$datapath
-            print("########### File Accepted ###########")
-            print(characterFile)
-            # fix windows paths
-            characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
-            
-            # characterFile <- system.file("Tim_Fighter5", package = "import5eChar")
-            
-            print("########### Reading and replacing the PATH ###########")
-            # sheet = readLines('sheet.Rmd')
-            sheet = readLines(sheet)
-            
-            print(sheet[32])
-            sheet = sub(pattern = " characterFile", replace = paste0('"',characterFile,'"'), x = sheet,fixed = TRUE)
-            print(sheet[32])
-            tempFile = paste0(tempfile(),'.Rmd')
-            print("########### This is the temp file ###########")
-            print(tempFile)
-            
-            writeLines(sheet,tempFile)
-            
-            print("########### Attempt to render ###########")
-            # browser()
-            
-            render(tempFile,output_file =  file, 
-                   params = params,
-                   envir = new.env(parent = globalenv()))
-            
-            saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
-            
+            withProgress(message = 'Making pdf',value = 1,{
+                sheet = system.file('rmarkdown/templates/CharacterSheet/skeleton/skeleton.rmd',package = 'import5eChar')
+                
+                req(input$xmlExport)
+                characterFile = input$xmlExport$datapath
+                print("########### File Accepted ###########")
+                print(characterFile)
+                # fix windows paths
+                characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
+                
+                # characterFile <- system.file("Tim_Fighter5", package = "import5eChar")
+                
+                print("########### Reading and replacing the PATH ###########")
+                # sheet = readLines('sheet.Rmd')
+                sheet = readLines(sheet)
+                
+                print(sheet[32])
+                sheet = sub(pattern = " characterFile", replace = paste0('"',characterFile,'"'), x = sheet,fixed = TRUE)
+                print(sheet[32])
+                tempFile = paste0(tempfile(),'.Rmd')
+                print("########### This is the temp file ###########")
+                print(tempFile)
+                
+                writeLines(sheet,tempFile)
+                
+                print("########### Attempt to render ###########")
+                # browser()
+                
+                render(tempFile,output_file =  file, 
+                       params = params,
+                       envir = new.env(parent = globalenv()))
+                
+                saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+            })
             # knit(tempFile,'lolo.pdf',)
         }
     )
     
-    observe({
+    
+    output$textOut = renderUI({
         input$impInit
         isolate({
             characterFile = input$xmlExport$datapath
             if(!is.null(characterFile)){
-                # fix windows paths
-                characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
-                char = importCharacter(file = characterFile)
-                json = improvedInitiativeJSON(char)
-                modalDialog(title = 'JSON for improved initative',
-                            tagList(
-                            code(json, style= 'display:block;white-space:pre-wrap'))) %>% showModal
-                saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+                withProgress(message = 'Making JSON',value = 1,{
+                    characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
+                    char = importCharacter(file = characterFile)
+                    json = improvedInitiativeJSON(char)
+                    saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+                    
+                    tagList(wellPanel(h4("JSON for improved initiative"),
+                                      rclipButton("iiclip", "Copy to Clipboard", json, icon("clipboard")),
+                                      code(json, style= 'display:block;white-space:pre-wrap')))
+                })
             }
         })
+        
     })
     
     

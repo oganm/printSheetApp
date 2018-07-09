@@ -49,8 +49,9 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
                   downloadButton('download','Export less pretty PDF'),
                   downloadButton('downloadNew','Export pretty PDF'),
                   actionButton('impInit','Improved Initiative JSON'),
-                  actionButton('interactiveSheet','New Interactive Sheet (External Link)',
-                               onclick = "window.open('https://github.com/oganm/5eInteractiveSheet/blob/master/README.md/','_blank')")),
+                  actionButton('avrae','Avrae Google Drive Sheet'),
+                  actionButton('interactiveSheet','Interactive Sheet (External Link)',
+                               onclick = "window.open('https://oganm.github.io/5eInteractiveSheet/','_blank')")),
                   column(4,
                          actionButton('meh','Donate',
                                           icon = icon('gift'),
@@ -68,7 +69,6 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
               bsTooltip('consentDiv',
                         title = "If the box is checked I save a copy of the uploaded character sheet. I use these saved sheets as test cases when improving the application. I also plan to use them for some statistical analyses examining character building choices. The characters remain your intellectual property. If you\\'d rather I didn\\'t save your character, uncheck this box. I won\\'t be mad. Only dissapointed")
     ),
+    htmlOutput('avraeOut'),
     htmlOutput('textOut')
-    
-    # If the box is checked I save a copy of the uploaded character sheet for fun. I use these saved sheets as test cases when improving the application. I also plan to use them for some statistical analyses examining character building choices. If you'd rather I didn't save your character, uncheck this box. I won't be mad. Only dissapointed.
 ))

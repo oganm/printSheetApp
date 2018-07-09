@@ -56,6 +56,21 @@ shinyServer(function(input, output, session) {
         }
     )
     
+    output$avraeOut = renderUI({
+        input$avrae
+        isolate({
+            characterFile = input$xmlExport$datapath
+            if(!is.null(characterFile)){
+                withProgress(message = 'Creating google drive sheet', value = 1,{
+                    characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
+                    char = importCharacter(file = characterFile)
+                    sheet = avraeSheet(char)
+                    tagList(wellPanel(h4(a(href=sheet$drive_resource[[1]]$webViewLink,target= '_blank', 'G Drive Link'))))
+                })
+            }
+        })
+    })
+    
     
     output$textOut = renderUI({
         input$impInit

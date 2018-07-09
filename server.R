@@ -65,7 +65,14 @@ shinyServer(function(input, output, session) {
                     characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
                     char = importCharacter(file = characterFile)
                     sheet = avraeSheet(char)
-                    tagList(wellPanel(h4(a(href=sheet$drive_resource[[1]]$webViewLink,target= '_blank', 'G Drive Link'))))
+                    
+                    saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+                    
+                    
+                    tagList(wellPanel(h4('Google Drive Sheet'),
+                                      p('Get your file ',
+                                      a(href=sheet$drive_resource[[1]]$webViewLink,target= '_blank', 'here.')),
+                                      p('Please copy the file to your own drive to prevent data loss')))
                 })
             }
         })

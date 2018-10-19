@@ -11,7 +11,11 @@ library(ogbox)
 library(bindrcpp)
 library(shinythemes)
 library(shinyBS)
+library(future)
+library(promises)
 library(rclipboard)
+plan(multiprocess,workers = 4)
+
 
 saveCharacter = function(characterFile, consent, fingerprint = ''){
     randomName = tools::md5sum(characterFile)

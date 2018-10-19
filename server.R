@@ -61,19 +61,22 @@ shinyServer(function(input, output, session) {
         isolate({
             characterFile = input$xmlExport$datapath
             if(!is.null(characterFile)){
-                withProgress(message = 'Creating google drive sheet', value = 1,{
-                    characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
-                    char = importCharacter(file = characterFile)
-                    sheet = avraeSheet(char)
-                    
-                    saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
-                    
-                    
+                p = Progress$new()
+                p$set(value = 1,message = 'Creating google drive sheet')
+                characterFile %<>% gsub(pattern = '\\\\',replacement ='/',x = .)
+                char = importCharacter(file = characterFile)
+                saveCharacter(characterFile,input$consent, paste0(input$fingerprint,'_',input$ipid))
+                
+                # sheet = avraeSheet(char)
+                
+                future({avraeSheet(char)}) %...>%
+                {
                     tagList(wellPanel(h4('Google Drive Sheet'),
                                       p('Get your file ',
-                                      a(href=sheet$drive_resource[[1]]$webViewLink,target= '_blank', 'here.')),
+                                        a(href=.$drive_resource[[1]]$webViewLink,target= '_blank', 'here.')),
                                       p('Please copy the file to your own drive to prevent data loss')))
-                })
+                } %T>%  finally(~p$close())
+                
             }
         })
     })

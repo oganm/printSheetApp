@@ -107,15 +107,13 @@ shinyServer(function(input, output, session) {
     # show a warning if directly connected to shinyapps.io
     observe({
         query = parseQueryString(session$clientData$url_search)
-        if(is.null(query$valid) || query$valid!=TRUE){
+        if(!is.null(query$valid) && query$valid==TRUE){
             showModal(
-                modalDialog(title = "You are using the wrong link!",
-                            p("You are connecting to my hosting service diretly instead of using the real link for the site:", 
-                              a(href="https://oganm.github.io/printSheetApp/",target= '_blank', 'oganm.github.io/printSheetApp'),'.'),
-                            p("If you continue to use this link, this site can go down without warning if the hosting service changes 
-                              or it can have an out of date version with unfixed bugs if I don't take it down. Don't trust this link. 
-                              Use the officially supported one."),
-                            easyClose = TRUE)
+                modalDialog(title = "We are moving!",
+                            p("This app is moving. You can now access it from ", 
+                              a(href="https://oganm.com/shiny/printSheetApp",target= '_blank', 'oganm.com/shiny/printSheetApp'),'.'),
+                            p("This link will continue to work but you will get this annoying message every time."),
+                            easyClose = FALSE)
             )
         }
     }

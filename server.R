@@ -19,7 +19,7 @@ shinyServer(function(input, output, session) {
         filename = 'charSheet.pdf',
         content = function(file) {
             withProgress(message = 'Making pdf',value = 1,{
-                sheet = system.file('rmarkdown/templates/CharacterSheet/skeleton/skeleton.rmd',package = 'import5eChar')
+                sheet = system.file('rmarkdown/templates/character-sheet/skeleton/skeleton.Rmd',package = 'import5eChar')
                 
                 req(input$xmlExport)
                 characterFile = input$xmlExport$datapath

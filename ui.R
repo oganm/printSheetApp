@@ -37,8 +37,8 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
             target= '_blank', 'Fifth Edition Character Sheet')),
         p('Export your character to google drive and download the file to your PC.'),
               p('Upload that file here and click Export PDF.'),
-              p('Pretty pdf is a fillable character sheets from Wizard\'s. Slightly slower to generate'),
               p('Less pretty pdf is a plain pdf'),
+              p('Pretty pdf is a fillable character sheets from Wizards. Slightly slower to generate'),
               p('Avrae google drive sheet takes about 2 minutes to generate'),
               p('XML is parsed with ', 
                 a(href="https://github.com/oganm/import5eChar",target= '_blank', 'this'), ' R package.'),
@@ -55,9 +55,11 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
                   downloadButton('downloadNew','Export pretty PDF'),
                   actionButton('impInit','Improved Initiative JSON'),
                   actionButton('avrae','Avrae Google Drive Sheet (~2 mins)'),
-                  actionButton('interactiveSheet','Interactive Sheet (External Link)',
+                  actionButton('interactiveSheet','Interactive Sheet',
+                               icon = shiny::icon('external-link-alt'),
                                onclick = "window.open('https://oganm.github.io/5eInteractiveSheet/','_blank')"),
-                  actionButton('dndstats','User Statistics (External Link)',
+                  actionButton('dndstats','User Statistics',
+                               icon  = shiny::icon('external-link-alt'),
                                onclick = "window.open('https://oganm.github.io/dndstats/','_blank')")),
                   column(4,
                          actionButton('meh','Donate',
@@ -65,7 +67,8 @@ shinyUI(fluidPage(theme = shinytheme('cosmo'),
                                           onclick =
                                               "window.open('https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NBC57LQVGMAJG', '_blank')",
                                           style = 'float:right;padding:6px 10px;font-size:80%'),
-                         bsTooltip('meh',title = "I can afford to keep this up virtually forever as it only costs about 7$/month to run. But if you are feeling generous it\\'s nice for things to pay for themselves")
+                         bsTooltip('meh',title = readLines('http://oganm.com/donation.txt'))
+                         
                          
                              )
                   ),
